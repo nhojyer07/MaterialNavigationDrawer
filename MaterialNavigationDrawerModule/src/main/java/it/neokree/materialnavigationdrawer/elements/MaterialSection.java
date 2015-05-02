@@ -42,11 +42,11 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
 
     private int accountPosition; // used only for keep tracking of account section
     private int targetType;
-    private View view;
-    private TextView text;
-    private TextView notifications;
-    private ImageView icon;
-    private MaterialRippleLayout ripple;
+    protected View view;
+    protected TextView text;
+    protected TextView notifications;
+    protected ImageView icon;
+    protected MaterialRippleLayout ripple;
     private MaterialSectionListener listener;
     private boolean isSelected;
     private boolean hasSectionColor;
@@ -77,56 +77,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
     public MaterialSection(Context ctx, int iconType, boolean hasRippleSupport,  int target ) {
         rippleSupport = hasRippleSupport;
 
-        if(rippleAnimationSupport()) {
-            // section with ripple effect
-
-            switch(iconType) {
-                case ICON_NO_ICON:
-                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_ripple, null);
-                    break;
-                case ICON_24DP:
-                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_icon_ripple, null);
-
-                    icon = (ImageView) view.findViewById(R.id.section_icon);
-                    break;
-                case ICON_40DP:
-                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_icon_large_ripple, null);
-
-                    icon = (ImageView) view.findViewById(R.id.section_icon);
-                    break;
-            }
-
-            text = (TextView) view.findViewById(R.id.section_text);
-            notifications = (TextView) view.findViewById(R.id.section_notification);
-            ripple = (MaterialRippleLayout) view.findViewById(R.id.section_ripple);
-
-        }
-        else {
-            // section with normal background
-
-            switch (iconType) {
-                case ICON_NO_ICON:
-                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section, null);
-
-                    text = (TextView) view.findViewById(R.id.section_text);
-                    notifications = (TextView) view.findViewById(R.id.section_notification);
-                    break;
-                case ICON_24DP:
-                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_icon, null);
-
-                    text = (TextView) view.findViewById(R.id.section_text);
-                    icon = (ImageView) view.findViewById(R.id.section_icon);
-                    notifications = (TextView) view.findViewById(R.id.section_notification);
-                    break;
-                case ICON_40DP:
-                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_icon_large, null);
-
-                    text = (TextView) view.findViewById(R.id.section_text);
-                    icon = (ImageView) view.findViewById(R.id.section_icon);
-                    notifications = (TextView) view.findViewById(R.id.section_notification);
-                    break;
-            }
-        }
+        createView(ctx, iconType);
 
         // resolve attributes from current theme
         Resources.Theme theme = ctx.getTheme();
@@ -177,6 +128,58 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
         realColor = false;
         targetType = target;
         numberNotifications = 0;
+    }
+
+    protected void createView(Context ctx, int iconType) {
+        if(rippleAnimationSupport()) {
+            // section with ripple effect
+
+            switch(iconType) {
+                case ICON_NO_ICON:
+                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_ripple, null);
+                    break;
+                case ICON_24DP:
+                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_icon_ripple, null);
+
+                    icon = (ImageView) view.findViewById(R.id.section_icon);
+                    break;
+                case ICON_40DP:
+                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_icon_large_ripple, null);
+
+                    icon = (ImageView) view.findViewById(R.id.section_icon);
+                    break;
+            }
+
+            text = (TextView) view.findViewById(R.id.section_text);
+            notifications = (TextView) view.findViewById(R.id.section_notification);
+            ripple = (MaterialRippleLayout) view.findViewById(R.id.section_ripple);
+        }
+        else {
+            // section with normal background
+
+            switch (iconType) {
+                case ICON_NO_ICON:
+                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section, null);
+
+                    text = (TextView) view.findViewById(R.id.section_text);
+                    notifications = (TextView) view.findViewById(R.id.section_notification);
+                    break;
+                case ICON_24DP:
+                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_icon, null);
+
+                    text = (TextView) view.findViewById(R.id.section_text);
+                    icon = (ImageView) view.findViewById(R.id.section_icon);
+                    notifications = (TextView) view.findViewById(R.id.section_notification);
+                    break;
+                case ICON_40DP:
+                    view = LayoutInflater.from(ctx).inflate(R.layout.layout_material_section_icon_large, null);
+
+                    text = (TextView) view.findViewById(R.id.section_text);
+                    icon = (ImageView) view.findViewById(R.id.section_icon);
+                    notifications = (TextView) view.findViewById(R.id.section_notification);
+                    break;
+            }
+        }
     }
 
     // methods for customizations
@@ -480,7 +483,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
             this.targetListener.onClick(this);
     }
 
-    private boolean rippleAnimationSupport() {
+    protected boolean rippleAnimationSupport() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH && rippleSupport;
     }
 
