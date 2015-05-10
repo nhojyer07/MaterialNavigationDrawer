@@ -129,7 +129,6 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
         realColor = false;
         targetType = target;
         numberNotifications = 0;
-        sectionColor = Color.BLACK;
     }
 
     protected void createView(Context ctx, int iconType) {
@@ -291,7 +290,9 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
             view.setBackgroundColor(colorSelected);
         else
             ripple.setRippleBackground(colorSelected);
-    
+
+        if (!hasSectionColor)
+            sectionColor = Color.BLACK;
         text.setTextColor(sectionColor);
 
         if(icon != null && !realColor) {
@@ -460,13 +461,13 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
     private void afterClick() {
         isSelected = true;
 
-        if (hasSectionColor) {
-            text.setTextColor(sectionColor);
+        if (!hasSectionColor)
+            sectionColor = Color.BLACK;
+        text.setTextColor(sectionColor);
 
-            if (icon != null && !realColor) {
-                icon.setColorFilter(sectionColor);
-                Utils.setAlpha(icon, 1f);
-            }
+        if (icon != null && !realColor) {
+            icon.setColorFilter(sectionColor);
+            Utils.setAlpha(icon, 1f);
         }
 
         if (listener != null)
