@@ -290,14 +290,12 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
             view.setBackgroundColor(colorSelected);
         else
             ripple.setRippleBackground(colorSelected);
+    
+        text.setTextColor(sectionColor);
 
-        if(hasSectionColor) {
-            text.setTextColor(sectionColor);
-
-            if(icon != null && !realColor) {
-                icon.setColorFilter(sectionColor);
-                Utils.setAlpha(icon, 1f);
-            }
+        if(icon != null && !realColor) {
+            icon.setColorFilter(sectionColor);
+            Utils.setAlpha(icon, 1f);
         }
     }
 
