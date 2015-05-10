@@ -128,6 +128,7 @@ public class MaterialSection<Fragment> implements View.OnTouchListener, View.OnC
         realColor = false;
         targetType = target;
         numberNotifications = 0;
+        sectionColor = Color.BLACK;
     }
 
     protected void createView(Context ctx, int iconType) {
